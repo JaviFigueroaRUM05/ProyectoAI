@@ -19,9 +19,7 @@ class GraphProblem(Problem):
         return action
 
     def path_cost(self, cost_so_far, A, action, B):
-        # print('Cost Before', cost_so_far)
-        # print('Cost After', cost_so_far + (self.graph.get(A, B) or np.inf))
-        return cost_so_far + (self.graph.get(A, B) or np.inf)
+        return cost_so_far + (self.graph.get(A, B)/self.V_max[A][0] or np.inf)
 
     def find_min_edge(self):
         """Find minimum value of edges."""
@@ -38,27 +36,26 @@ class GraphProblem(Problem):
         locs = getattr(self.graph, 'locations', None)
         if locs:
             if type(node) is str:
-                return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state])
-            return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state])
+                return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state][1])
+            return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state][1])
         else:
             return np.inf
 
 # Graph with actual cost values -> g(n)
 graph = UndirectedGraph(dict(
-        Arad=dict(Zerind=15, Sibiu=28, Timisoara=23),
-        Bucharest=dict(Urziceni=17, Pitesti=20, Giurgiu=18, Fagaras=42),
-        Craiova=dict(Drobeta=24, Rimnicu=29, Pitesti=27),
-        Drobeta=dict(Mehadia=15),
-        Eforie=dict(Hirsova=17),
-        Fagaras=dict(Sibiu=19),
-        Hirsova=dict(Urziceni=19),
-        Iasi=dict(Vaslui=18, Neamt=17),
-        Lugoj=dict(Timisoara=22, Mehadia=14),
-        Oradea=dict(Zerind=14, Sibiu=30),
-        Pitesti=dict(Rimnicu=19),
-        Rimnicu=dict(Sibiu=16),
-        Urziceni=dict(Vaslui=28))
-)
+    Arad=dict(Zerind=75, Sibiu=140, Timisoara=118),
+    Bucharest=dict(Urziceni=85, Pitesti=101, Giurgiu=90, Fagaras=211),
+    Craiova=dict(Drobeta=120, Rimnicu=146, Pitesti=138),
+    Drobeta=dict(Mehadia=75),
+    Eforie=dict(Hirsova=86),
+    Fagaras=dict(Sibiu=99),
+    Hirsova=dict(Urziceni=98),
+    Iasi=dict(Vaslui=92, Neamt=87),
+    Lugoj=dict(Timisoara=111, Mehadia=70),
+    Oradea=dict(Zerind=71, Sibiu=151),
+    Pitesti=dict(Rimnicu=97),
+    Rimnicu=dict(Sibiu=80),
+    Urziceni=dict(Vaslui=142)))
 
 # Used in the distance calculation between 
 # node "n" to the goal node (straight line distance = D)
@@ -71,20 +68,20 @@ graph.locations = dict(
     Sibiu=(207, 457), Timisoara=(94, 410), Urziceni=(456, 350),
     Vaslui=(509, 444), Zerind=(108, 531))
 
-# Speed limits (V)
-V_maxToGoal = dict(
-        Arad=35, Bucharest=50, Craiova=20,
-        Drobeta=41, Eforie=22, Fagaras=30,
-        Giurgiu=12, Hirsova=19, Iasi=22,
-        Lugoj=33, Mehadia=29, Neamt=34,
-        Oradea=55, Pitesti=20, Rimnicu=31,
-        Sibiu=36, Timisoara=48, Urziceni=10,
-        Vaslui=25, Zerind=60
+# Dictionary of speeds City(actual speed, speed limit)
+v_V = dict(
+        Arad=(20, 35), Bucharest=(38, 50), Craiova=(10, 20),
+        Drobeta=(36, 41), Eforie=(11, 22), Fagaras=(22, 30),
+        Giurgiu=(7, 12), Hirsova=(15, 19), Iasi=(18, 22),
+        Lugoj=(21, 33), Mehadia=(24, 29), Neamt=(19, 34),
+        Oradea=(44, 55), Pitesti=(15, 20), Rimnicu=(22, 31),
+        Sibiu=(20, 36), Timisoara=(33, 48), Urziceni=(6, 10),
+        Vaslui=(11, 25), Zerind=(50, 60)
 )
 
 initial_N = 'Arad'
 goal_N = 'Bucharest'
-problem = GraphProblem(initial_N, goal_N, graph, V_maxToGoal)
+problem = GraphProblem(initial_N, goal_N, graph, v_V)
 
 # A* call. astar_search is from search.py
 shortest_Path = astar_search(problem).path()
@@ -92,8 +89,8 @@ shortest_Path = astar_search(problem).path()
 print("Shortest path from", initial_N, "to", goal_N, "->",  shortest_Path)
 
 # d_v = dict(
-#     Arad=dict(Zerind=(75,15), Sibiu=(140, 28), Timisoara=(118, 23)),
-#     Bucharest=dict(Urziceni=(85, 17), Pitesti=(101, 20), Giurgiu=(90, 18), Fagaras=(211, 42)),
+#     Arad=dict(Zerind=(75,15, 60), Sibiu=(140, 28, 36), Timisoara=(118, 23, 48)),
+#     Bucharest=dict(Urziceni=(85, 17, 10), Pitesti=(101, 20), Giurgiu=(90, 18), Fagaras=(211, 42)),
 #     Craiova=dict(Drobeta=(120, 24), Rimnicu=(146, 29), Pitesti=(138, 27)),
 #     Drobeta=dict(Mehadia=(75, 15)),
 #     Eforie=dict(Hirsova=(86, 17)),
