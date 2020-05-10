@@ -5,10 +5,10 @@ class GraphProblem(Problem):
 
     """The problem of searching a graph from one node to another."""
 
-    def __init__(self, initial, goal, graph, V_max):
+    def __init__(self, initial, goal, graph, v_V):
         Problem.__init__(self, initial, goal)
         self.graph = graph
-        self.V_max = V_max
+        self.v_V = v_V
 
     def actions(self, A):
         """The actions at a graph node are just its neighbors."""
@@ -19,7 +19,7 @@ class GraphProblem(Problem):
         return action
 
     def path_cost(self, cost_so_far, A, action, B):
-        return cost_so_far + (self.graph.get(A, B)/self.V_max[A][0] or np.inf)
+        return cost_so_far + (self.graph.get(A, B)/self.v_V[A][0] or np.inf)
 
     def find_min_edge(self):
         """Find minimum value of edges."""
@@ -36,8 +36,8 @@ class GraphProblem(Problem):
         locs = getattr(self.graph, 'locations', None)
         if locs:
             if type(node) is str:
-                return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state][1])
-            return int(distance(locs[node.state], locs[self.goal])/self.V_max[node.state][1])
+                return int(distance(locs[node.state], locs[self.goal])/self.v_V[node.state][1])
+            return int(distance(locs[node.state], locs[self.goal])/self.v_V[node.state][1])
         else:
             return np.inf
 
