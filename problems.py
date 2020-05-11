@@ -89,7 +89,6 @@ class GraphProblem(Problem):
         if locs:
             if type(node) is str:
                 return int(distance(locs[node], locs[self.goal]))
-
             return int(distance(locs[node.state], locs[self.goal]))
         else:
             return np.inf

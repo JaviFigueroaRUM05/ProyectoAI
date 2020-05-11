@@ -39,3 +39,21 @@ speeds = dict(
         Oradea=(44, 55), Pitesti=(15, 20), Rimnicu=(22, 31),
         Sibiu=(20, 36), Timisoara=(33, 48), Urziceni=(6, 10),
         Vaslui=(11, 25), Zerind=(50, 60))
+
+
+
+# d_v = dict(
+#     Arad=dict(Zerind=(75,15, 60), Sibiu=(140, 28, 36), Timisoara=(118, 23, 48)),
+#     Bucharest=dict(Urziceni=(85, 17, 10), Pitesti=(101, 20), Giurgiu=(90, 18), Fagaras=(211, 42)),
+#     Craiova=dict(Drobeta=(120, 24), Rimnicu=(146, 29), Pitesti=(138, 27)),
+#     Drobeta=dict(Mehadia=(75, 15)),
+#     Eforie=dict(Hirsova=(86, 17)),
+#     Fagaras=dict(Sibiu=(99, 19)),
+#     Hirsova=dict(Urziceni=(98, 19)),
+#     Iasi=dict(Vaslui=(92, 18), Neamt=(87, 17)),
+#     Lugoj=dict(Timisoara=(111, 22), Mehadia=(70, 14)),
+#     Oradea=dict(Zerind=(71, 14), Sibiu=(151, 30)),
+#     Pitesti=dict(Rimnicu=(97, 19)),
+#     Rimnicu=dict(Sibiu=(80, 16)),
+#     Urziceni=dict(Vaslui=(142, 28))
+# )
