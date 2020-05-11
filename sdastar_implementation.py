@@ -1,7 +1,9 @@
 from search import *
+from math import exp
+from random import random
 import numpy as np
 
-class AStarGraphProblem(Problem):
+class SDAStarGraphProblem(Problem):
 
     """The problem of searching a graph from one node to another."""
 
@@ -19,7 +21,14 @@ class AStarGraphProblem(Problem):
         return action
 
     def path_cost(self, cost_so_far, A, action, B):
-        return cost_so_far + (self.graph.get(A, B)/self.v_V[A][0] or np.inf)
+        random_var = random()
+        probability = 1 - exp(-1.5*cost_so_far)
+        if (random_var >= probability):
+            step_cost = (self.graph.get(A, B)/self.v_V[A][0] or np.inf)
+        else:
+            step_cost = (self.graph.get(A, B)/self.v_V[A][1] or np.inf)
+
+        return cost_so_far + step_cost
 
     def find_min_edge(self):
         """Find minimum value of edges."""
@@ -81,7 +90,7 @@ v_V = dict(
 
 initial_N = 'Arad'
 goal_N = 'Bucharest'
-problem = AStarGraphProblem(initial_N, goal_N, graph, v_V)
+problem = SDAStarGraphProblem(initial_N, goal_N, graph, v_V)
 
 # A* call. astar_search is from search.py
 shortest_Path = astar_search(problem).path()
