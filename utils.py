@@ -1,3 +1,6 @@
+#
+# Authors: aimacode
+#
 """Provides some utilities widely used by other modules"""
 
 import bisect
