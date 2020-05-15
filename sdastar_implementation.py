@@ -1,3 +1,6 @@
+#
+# Authors: Javier Figueroa, Jadhiel Alvarez and Brian Muñoz
+#
 from problems import GraphProblem
 import romania
 from search import *
