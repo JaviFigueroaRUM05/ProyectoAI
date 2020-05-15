@@ -1,3 +1,6 @@
+#
+# Authors: aimacode
+#
 from search import * 
 from utils import *
 import romania 
