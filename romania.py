@@ -1,3 +1,6 @@
+#
+# Authors: aimacode, Javier Figueroa, Jadhiel Alvarez and Brian Muñoz
+#
 from graphs import UndirectedGraph
 
 # ______________________________________________________________________________
